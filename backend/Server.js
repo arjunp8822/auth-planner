@@ -88,7 +88,7 @@ app.post("/login", async (req, res) => {
     const existingUser = await User.find({ username: username });
     if (existingUser.length === 0) {
       return res
-        .status(400)
+        .status(401)
         .json({ message: "Username or password incorrect" });
     }
     const verifiedUser = await bcrypt.compare(
@@ -97,7 +97,7 @@ app.post("/login", async (req, res) => {
     );
     if (!verifiedUser) {
       return res
-        .status(400)
+        .status(401)
         .json({ message: "Username or password incorrect" });
     }
     const token = jwt.sign(
@@ -107,7 +107,7 @@ app.post("/login", async (req, res) => {
       process.env.JWT_SECRET
     );
     res.cookie("token", token);
-    res.status(200).json({ message: "User logged in" });
+    res.status(200).json({ message: "User logged in", user: username });
   } catch (e) {
     res.status(500).json({ message: e });
   }
