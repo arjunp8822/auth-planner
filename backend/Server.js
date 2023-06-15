@@ -15,9 +15,36 @@ async function main() {
 
 main().catch((err) => console.log(err));
 
+async function authMiddleware(req, res, next) {
+  try {
+    const token = await req.cookies.token;
+    const verifiedToken = await jwt.verify(token, process.env.JWT_SECRET);
+    if (!verifiedToken) {
+      return res.status(401).json({ message: "User not authorised" });
+    }
+    return res.status(200).json({ message: "User authorised" });
+  } catch (e) {
+    return res.status(200).json({ message: "User not authorised" });
+  }
+  next();
+}
+
 app.use(express.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieparser());
+
+app.get("/todos", authMiddleware, (req, res) => {
+  return res.status(200).json({ message: "Get request authorised" });
+});
+
+app.get("/logout", (req, res) => {
+  try {
+    res.clearCookie("token");
+    return res.status(200).json({ message: "User logged out" });
+  } catch (e) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 app.post("/register", async (req, res) => {
   try {
