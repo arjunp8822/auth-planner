@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("./schemas/UserSchema");
 require("dotenv").config();
+const cookieparser = require("cookie-parser");
 
 const app = express();
 
@@ -15,7 +16,8 @@ async function main() {
 main().catch((err) => console.log(err));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cookieparser());
 
 app.post("/register", async (req, res) => {
   try {
