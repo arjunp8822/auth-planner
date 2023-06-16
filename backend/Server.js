@@ -36,40 +36,80 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieparser());
 
 app.get("/todos", async (req, res) => {
-  const todos = await Todo.find({}).populate("category");
-  console.log(todos);
-  return res.status(200).json({ message: "Get request authorised" });
+  try {
+    const todos = await Todo.find({}).populate("category");
+    console.log(todos);
+    return res.status(200).json({ message: "Get request authorised" });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/categories", async (req, res) => {
+  try {
+    const categories = await Category.find({});
+    return res.status(200).json({ message: "Get request authorised" });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/categories/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const category = await Category.findById(id).populate("todos");
+    console.log(category);
+    return res.status(200).json({ message: "Get request authorised" });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.post("/categories/create", async (req, res) => {
-  const { title } = req.body;
-  const newCategory = new Category({
-    title: title,
-  });
-  const savedCategory = await newCategory.save();
-  res.status(200).json({ message: "Category saved" });
+  try {
+    const { title } = req.body;
+    const newCategory = new Category({
+      title: title,
+    });
+    const savedCategory = await newCategory.save();
+    res.status(200).json({ message: "Category saved" });
+  } catch (e) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.post("/todos/create", async (req, res) => {
-  const { title, status, category } = req.body;
-  if (status != "Low" && status != "Medium" && status != "Urgent") {
-    return res
-      .status(500)
-      .json({ message: "Status must be low, medium or urgent" });
+  try {
+    const { title, status, category } = req.body;
+    if (status != "Low" && status != "Medium" && status != "Urgent") {
+      return res
+        .status(500)
+        .json({ message: "Status must be low, medium or urgent" });
+    }
+    const foundCategory = await Category.find({
+      title: category,
+    });
+    if (foundCategory.length === 0) {
+      return res.status(500).json({ message: "Category not found" });
+    }
+    const newTodo = new Todo({
+      title: title,
+      status: status,
+      category: foundCategory[0]._id,
+    });
+    const savedTodo = await newTodo.save();
+
+    foundCategory[0].todos.push(newTodo);
+    foundCategory[0].save();
+
+    res.status(200).json({ message: "Todo saved" });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error" });
   }
-  const foundCategory = await Category.find({
-    title: category,
-  });
-  if (foundCategory.length === 0) {
-    return res.status(500).json({ message: "Category not found" });
-  }
-  const newTodo = new Todo({
-    title: title,
-    status: status,
-    category: foundCategory[0]._id,
-  });
-  const savedTodo = await newTodo.save();
-  res.status(200).json({ message: "Todo saved" });
 });
 
 app.get("/logout", (req, res) => {

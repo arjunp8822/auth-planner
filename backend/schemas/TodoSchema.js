@@ -11,7 +11,7 @@ const TodoSchema = new Schema({
   },
   category: {
     type: mongoose.Types.ObjectId,
-    ref: Category,
+    ref: "Category",
   },
   isComplete: {
     type: Boolean,

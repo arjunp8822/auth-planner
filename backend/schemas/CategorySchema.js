@@ -1,18 +1,16 @@
 const mongoose = require("mongoose");
+const Todo = require("./TodoSchema");
 
 const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
   title: String,
-  status: {
-    type: String,
-    enum: ["Low", "Medium", "Urgent"],
-  },
-  category: String,
-  isComplete: {
-    type: Boolean,
-    default: false,
-  },
+  todos: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Todo",
+    },
+  ],
 });
 
 const Category = mongoose.model("Category", CategorySchema);
