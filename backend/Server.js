@@ -4,6 +4,8 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("./schemas/UserSchema");
+const Category = require("./schemas/CategorySchema");
+const Todo = require("./schemas/TodoSchema");
 require("dotenv").config();
 const cookieparser = require("cookie-parser");
 
@@ -33,8 +35,41 @@ app.use(express.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieparser());
 
-app.get("/todos", authMiddleware, (req, res) => {
+app.get("/todos", async (req, res) => {
+  const todos = await Todo.find({}).populate("category");
+  console.log(todos);
   return res.status(200).json({ message: "Get request authorised" });
+});
+
+app.post("/categories/create", async (req, res) => {
+  const { title } = req.body;
+  const newCategory = new Category({
+    title: title,
+  });
+  const savedCategory = await newCategory.save();
+  res.status(200).json({ message: "Category saved" });
+});
+
+app.post("/todos/create", async (req, res) => {
+  const { title, status, category } = req.body;
+  if (status != "Low" && status != "Medium" && status != "Urgent") {
+    return res
+      .status(500)
+      .json({ message: "Status must be low, medium or urgent" });
+  }
+  const foundCategory = await Category.find({
+    title: category,
+  });
+  if (foundCategory.length === 0) {
+    return res.status(500).json({ message: "Category not found" });
+  }
+  const newTodo = new Todo({
+    title: title,
+    status: status,
+    category: foundCategory[0]._id,
+  });
+  const savedTodo = await newTodo.save();
+  res.status(200).json({ message: "Todo saved" });
 });
 
 app.get("/logout", (req, res) => {
