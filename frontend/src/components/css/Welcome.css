@@ -1,0 +1,14 @@
+#welcome h1 {
+    color: var(--secondary-header);
+    font-size: 32px;
+}
+
+#welcome span {
+    color: var(--primary-header);
+}
+
+@media (max-width: 768px) {
+    #welcome h1 {
+        font-size: 22px;
+    }
+}

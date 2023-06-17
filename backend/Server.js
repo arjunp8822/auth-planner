@@ -54,11 +54,44 @@ app.get("/categories", async (req, res) => {
   }
 });
 
+app.get("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id)
+      .populate("categories")
+      .populate("todos");
+    if (!user) {
+      return res.status(500).json({ message: "No user found" });
+    }
+    return res.status(200).json(user);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.get("/categories/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const category = await Category.findById(id).populate("todos");
-    console.log(category);
+    if (!category) {
+      return res.status(500).json({ message: "No category found" });
+    }
+    return res.status(200).json(category);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/todos/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const todo = await Todo.findById(id);
+    console.log(todo);
+    if (!todo) {
+      return res.status(500).json({ message: "No todo found" });
+    }
     return res.status(200).json({ message: "Get request authorised" });
   } catch (e) {
     console.log(e);

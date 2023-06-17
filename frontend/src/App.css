@@ -1,0 +1,39 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    list-style: none;
+}
+
+h1 {
+    font-size: 25px;
+}
+
+li {
+    font-size: 18px;
+}
+
+section {
+    padding: 80px;
+}
+
+:root {
+    --primary-bg: #ffffff;
+    --primary-header: #262040;
+    --secondary-header: #868394;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 18px;
+    }
+    
+    li {
+        font-size: 15px;
+    }
+
+    section {
+        padding: 30px;
+    }
+}

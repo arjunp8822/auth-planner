@@ -1,5 +1,5 @@
 import "./App.css";
-import Form from "./Form";
+import Home from "./Home";
 import axios from "axios";
 import { UserContext } from "./context/UserContext";
 import { useState } from "react";
@@ -9,7 +9,7 @@ function App() {
   const [loggedUser, setLoggedUser] = useState(null);
   return (
     <UserContext.Provider className="App" value={{ loggedUser, setLoggedUser }}>
-      <Form />
+      <Home />
     </UserContext.Provider>
   );
 }
