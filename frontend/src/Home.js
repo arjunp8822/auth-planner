@@ -3,6 +3,7 @@ import axios from "axios";
 import { UserContext } from "./context/UserContext";
 import Navbar from "./components/Navbar";
 import Welcome from "./components/Welcome";
+import PrioritySlider from "./components/PrioritySlider";
 
 const Home = () => {
   // const [username, setUsername] = useState(null);
@@ -84,6 +85,7 @@ const Home = () => {
     <>
       <Navbar />
       <Welcome />
+      <PrioritySlider />
       {/* <form onSubmit={submitHandler}>
         <input
           type="text"

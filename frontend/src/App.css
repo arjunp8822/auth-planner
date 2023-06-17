@@ -15,7 +15,11 @@ li {
 }
 
 section {
-    padding: 80px;
+    padding: 60px 80px;
+}
+
+li:hover {
+    cursor: pointer;
 }
 
 :root {
