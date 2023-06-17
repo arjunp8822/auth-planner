@@ -24,11 +24,10 @@ async function authMiddleware(req, res, next) {
     if (!verifiedToken) {
       return res.status(401).json({ message: "User not authorised" });
     }
-    return res.status(200).json({ message: "User authorised" });
+    next();
   } catch (e) {
     return res.status(200).json({ message: "User not authorised" });
   }
-  next();
 }
 
 app.use(express.json());
@@ -38,7 +37,6 @@ app.use(cookieparser());
 app.get("/todos", async (req, res) => {
   try {
     const todos = await Todo.find({}).populate("category");
-    console.log(todos);
     return res.status(200).json({ message: "Get request authorised" });
   } catch (e) {
     console.log(e);
@@ -68,42 +66,58 @@ app.get("/categories/:id", async (req, res) => {
   }
 });
 
-app.post("/categories/create", async (req, res) => {
+app.post("/categories/create", authMiddleware, async (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, user } = req.body;
+    const foundUser = await User.findOne({
+      username: user,
+    });
     const newCategory = new Category({
       title: title,
+      user: foundUser._id,
     });
+
     const savedCategory = await newCategory.save();
+    foundUser.categories.push(newCategory);
+    await foundUser.save();
+
     res.status(200).json({ message: "Category saved" });
   } catch (e) {
+    console.log(e);
     return res.status(500).json({ message: "Internal server error" });
   }
 });
 
-app.post("/todos/create", async (req, res) => {
+app.post("/todos/create", authMiddleware, async (req, res) => {
   try {
-    const { title, status, category } = req.body;
+    const { title, status, category, user } = req.body;
     if (status != "Low" && status != "Medium" && status != "Urgent") {
       return res
         .status(500)
         .json({ message: "Status must be low, medium or urgent" });
     }
-    const foundCategory = await Category.find({
+    const foundCategory = await Category.findOne({
       title: category,
     });
-    if (foundCategory.length === 0) {
+    if (!foundCategory) {
       return res.status(500).json({ message: "Category not found" });
     }
+
+    const foundUser = await User.findOne({
+      username: user,
+    });
+
     const newTodo = new Todo({
       title: title,
       status: status,
-      category: foundCategory[0]._id,
+      category: foundCategory._id,
     });
     const savedTodo = await newTodo.save();
 
-    foundCategory[0].todos.push(newTodo);
-    foundCategory[0].save();
+    foundCategory.todos.push(newTodo);
+    foundCategory.save();
+    foundUser.todos.push(newTodo);
+    await foundUser.save();
 
     res.status(200).json({ message: "Todo saved" });
   } catch (e) {
@@ -135,7 +149,7 @@ app.post("/register", async (req, res) => {
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
-    const existingUser = await User.find({ username: username });
+    const existingUser = await User.findOne({ username: username });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
@@ -160,16 +174,13 @@ app.post("/login", async (req, res) => {
     if (!username || !password) {
       return res.status(400).json({ message: "Enter all required fields" });
     }
-    const existingUser = await User.find({ username: username });
-    if (existingUser.length === 0) {
+    const existingUser = await User.findOne({ username: username });
+    if (!existingUser) {
       return res
         .status(401)
         .json({ message: "Username or password incorrect" });
     }
-    const verifiedUser = await bcrypt.compare(
-      password,
-      existingUser[0].password
-    );
+    const verifiedUser = await bcrypt.compare(password, existingUser.password);
     if (!verifiedUser) {
       return res
         .status(401)

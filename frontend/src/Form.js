@@ -7,6 +7,12 @@ const Form = () => {
   const [password, setPassword] = useState(null);
   const { loggedUser, setLoggedUser } = useContext(UserContext);
 
+  const [category, setCategory] = useState(null);
+
+  const [todoTitle, setTodoTitle] = useState(null);
+  const [todoStatus, setTodoStatus] = useState(null);
+  const [todoCategory, setTodoCategory] = useState(null);
+
   useEffect(() => {
     const getTodos = async () => {
       const response = await axios.get("http://localhost:4000/todos");
@@ -38,6 +44,40 @@ const Form = () => {
     console.log(response.data.message);
   };
 
+  const CategorySubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const categoryData = {
+        title: category,
+        user: loggedUser,
+      };
+      const catoryResponse = await axios.post(
+        "http://localhost:4000/categories/create",
+        categoryData
+      );
+    } catch (e) {
+      console.log(e.response.data.message);
+    }
+  };
+
+  const TodoSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const TodoData = {
+        title: todoTitle,
+        status: todoStatus,
+        category: todoCategory,
+        user: loggedUser,
+      };
+      const catoryResponse = await axios.post(
+        "http://localhost:4000/todos/create",
+        TodoData
+      );
+    } catch (e) {
+      console.log(e.response.data.message);
+    }
+  };
+
   return (
     <>
       <form onSubmit={submitHandler}>
@@ -55,6 +95,34 @@ const Form = () => {
       </form>
       <button onClick={logoutHandler}>Log Out</button>
       {loggedUser && <div>{loggedUser}</div>}
+
+      <form onSubmit={CategorySubmitHandler}>
+        <input
+          type="text"
+          placeholder="Category"
+          onChange={(e) => setCategory(e.target.value)}
+        />
+        <button>Submit</button>
+      </form>
+
+      <form onSubmit={TodoSubmitHandler}>
+        <input
+          type="text"
+          placeholder="Todo"
+          onChange={(e) => setTodoTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Status"
+          onChange={(e) => setTodoStatus(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Category"
+          onChange={(e) => setTodoCategory(e.target.value)}
+        />
+        <button>Submit</button>
+      </form>
     </>
   );
 };

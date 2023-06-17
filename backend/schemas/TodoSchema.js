@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Category = require("./CategorySchema");
+const User = require("./UserSchema");
 
 const Schema = mongoose.Schema;
 
@@ -16,6 +17,10 @@ const TodoSchema = new Schema({
   isComplete: {
     type: Boolean,
     default: false,
+  },
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
   },
 });
 
