@@ -195,7 +195,14 @@ app.post("/register", async (req, res) => {
       password: userData.password,
     });
     const savedUser = await user.save();
-    res.status(200).json({ message: "User registered" });
+    const token = jwt.sign(
+      {
+        username: username,
+      },
+      process.env.JWT_SECRET
+    );
+    res.cookie("token", token);
+    res.status(200).json({ message: "User registered", user: username });
   } catch (e) {
     res.status(500).json({ message: e });
   }

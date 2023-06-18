@@ -5,6 +5,7 @@
 
 #welcome span {
     color: var(--primary-header);
+    text-transform: capitalize;
 }
 
 @media (max-width: 768px) {

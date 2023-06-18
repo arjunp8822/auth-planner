@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./css/Welcome.css";
+import { UserContext } from "../context/UserContext";
 
 const Welcome = () => {
+  const { loggedUser } = useContext(UserContext);
   return (
     <section id="welcome">
-      <h1>
-        Hey <span>Arjun</span>, this is your to-do list.
-      </h1>
+      {loggedUser && (
+        <h1>
+          Hey <span>{loggedUser}</span>, this is your to-do list.
+        </h1>
+      )}
+      {!loggedUser && <h1>Please log in to see your to-do list.</h1>}
     </section>
   );
 };

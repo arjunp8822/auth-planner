@@ -18,16 +18,17 @@ const Register = () => {
       const registerData = {
         username: username,
         password: password,
-        passwordVerify: passwordVerify,
+        confirmPassword: passwordVerify,
       };
       const result = await axios.post(
-        "http://localhost:4000/auth/register",
+        "http://localhost:4000/register",
         registerData
       );
-      setLoggedUser(result.data);
+      console.log(result);
+      setLoggedUser(result.data.user);
       navigate("/");
     } catch (e) {
-      setErrorState(e.response.data.errorMessage);
+      setErrorState(e.response.data.message);
     }
   };
 
@@ -55,7 +56,7 @@ const Register = () => {
               onChange={(e) => setpasswordVerify(e.target.value)}
               value={passwordVerify}
             />
-            <div className="login-error">{errorState}</div>
+            <div className="login-error register-login-error">{errorState}</div>
             <button type="submit">Register</button>
           </form>
           <div className="register-container">
