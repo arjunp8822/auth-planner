@@ -1,8 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./css/Navbar.css";
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
 
 const Navbar = () => {
+  const { loggedUser, setLoggedUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    await axios.get("http://localhost:4000/logout");
+    setLoggedUser(null);
+    navigate("/");
+  };
+
   return (
     <nav>
       <Link to="/">
@@ -11,12 +22,22 @@ const Navbar = () => {
         </div>
       </Link>
       <ul className="menu">
-        <Link to="/register">
-          <li>Register</li>
-        </Link>
-        <Link to="/login">
-          <li>Login</li>
-        </Link>
+        {!loggedUser && (
+          <>
+            <Link to="/register">
+              <li>Register</li>
+            </Link>
+            <Link to="/login">
+              <li>Login</li>
+            </Link>
+          </>
+        )}
+        {loggedUser && (
+          <>
+            <li>{loggedUser}</li>
+            <li onClick={logoutHandler}>Log Out</li>
+          </>
+        )}
       </ul>
     </nav>
   );

@@ -33,6 +33,7 @@ a {
     --secondary-header: #868394;
     --light-grey: rgb(230, 230, 230);
     --grey: rgb(165, 165, 165);
+    --error: #fc5555;
 }
 
 .category-container {
