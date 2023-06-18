@@ -22,6 +22,11 @@ li:hover {
     cursor: pointer;
 }
 
+a {
+    text-decoration: inherit;
+    color: inherit;
+}
+
 :root {
     --primary-bg: #ffffff;
     --primary-header: #262040;
