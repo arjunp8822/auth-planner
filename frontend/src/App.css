@@ -26,6 +26,61 @@ li:hover {
     --primary-bg: #ffffff;
     --primary-header: #262040;
     --secondary-header: #868394;
+    --light-grey: rgb(230, 230, 230);
+    --grey: rgb(165, 165, 165);
+}
+
+.category-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.add-category {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-header);
+    font-size: 60px;
+    bottom: 40px;
+    left: 40px;
+    z-index: 5;
+}
+
+.add-category:hover {
+    cursor: pointer;
+}
+
+.add-todo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--primary-header);
+    font-size: 20px;
+    padding: 25px 0;
+    gap: 20px;
+}
+
+.add-todo p {
+    font-size: 15px;
+    color: var(--grey);
+}
+
+.add-todo:hover {
+    cursor: pointer;
+}
+
+#todo h3 {
+    font-weight: 400;
+    color: grey;
+    padding: 30px 0;
+}
+
+.todo-content {
+    margin-top: 50px;
 }
 
 @media (max-width: 768px) {
@@ -34,10 +89,39 @@ li:hover {
     }
     
     li {
-        font-size: 15px;
+        font-size: 13px;
     }
 
     section {
         padding: 30px;
+    }
+
+    .category-container {
+        gap: 15px;
+    }
+
+    .add-category {
+        font-size: 40px;
+        bottom: 30px;
+        left: 30px;
+    }
+
+    .add-todo {
+        font-size: 18px;
+        gap: 15px;
+    }
+    
+    .add-todo p {
+        font-size: 14px;
+        color: var(--grey);
+    }
+    
+    #todo h3 {
+        padding: 25px 0;
+        font-size: 17px;
+    }
+    
+    .todo-content {
+        margin-top: 30px;
     }
 }

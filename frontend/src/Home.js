@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "./context/UserContext";
-import Navbar from "./components/Navbar";
 import Welcome from "./components/Welcome";
 import PrioritySlider from "./components/PrioritySlider";
+import CategoryCard from "./components/CategoryCard";
+import { BsPlusSquareFill } from "react-icons/bs";
 
 const Home = () => {
   // const [username, setUsername] = useState(null);
@@ -83,9 +84,21 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
       <Welcome />
       <PrioritySlider />
+      <section className="category-container">
+        <CategoryCard />
+        <CategoryCard />
+        <CategoryCard />
+        <CategoryCard />
+        <CategoryCard />
+        <CategoryCard />
+        <CategoryCard />
+        <CategoryCard />
+      </section>
+      <div className="add-category">
+        <BsPlusSquareFill />
+      </div>
       {/* <form onSubmit={submitHandler}>
         <input
           type="text"

@@ -1,0 +1,44 @@
+.todo-header-container {
+    color: var(--primary-header);
+    font-size: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.todo-header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    color: #ecaf70;
+}
+
+.todo-header h1 {
+    color: var(--primary-header);
+}
+
+.todo-header-container p {
+    color: var(--secondary-header);
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+
+    .todo-header-container {
+        gap: 15px;
+    }
+
+    .todo-header {
+        display: flex;
+        gap: 10px;
+    }
+
+    .todo-header-container h1 {
+        font-size: 22px;
+    }
+
+    .todo-header-container p {
+        color: var(--secondary-header);
+        font-size: 15px;
+    }
+}
