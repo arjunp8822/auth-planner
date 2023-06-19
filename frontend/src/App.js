@@ -21,6 +21,13 @@ function App() {
 
   useEffect(() => {
     getLoggedIn();
+    const fetchCategoryData = async () => {
+      const result = await axios.get("http://localhost:4000/categories", {
+        user: loggedUser,
+      });
+      console.log(result);
+    };
+    fetchCategoryData();
   }, []);
 
   return (

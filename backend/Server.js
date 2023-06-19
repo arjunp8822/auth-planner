@@ -46,12 +46,13 @@ app.get("/todos", async (req, res) => {
 
 app.get("/categories", authMiddleware, async (req, res) => {
   try {
-    const { user } = req.body;
-    const categories = await Category.find({
-      user: user,
+    const { user } = req.cookies;
+    const userFull = await User.find({
+      username: user,
     });
+    const categories = await Category.find({ user: userFull });
     console.log(categories);
-    return res.status(200).json({ message: "Get request authorised" });
+    return res.status(200).json(categories);
   } catch (e) {
     console.log(e);
     return res.status(500).json({ message: "Internal server error" });
