@@ -7,9 +7,7 @@ import CategoryCard from "./components/CategoryCard";
 import { BsPlusSquareFill } from "react-icons/bs";
 
 const Home = () => {
-  // const [username, setUsername] = useState(null);
-  // const [password, setPassword] = useState(null);
-  // const { loggedUser, setLoggedUser } = useContext(UserContext);
+  const { loggedUser } = useContext(UserContext);
 
   // const [category, setCategory] = useState(null);
 
@@ -18,11 +16,13 @@ const Home = () => {
   // const [todoCategory, setTodoCategory] = useState(null);
 
   // useEffect(() => {
-  //   const getTodos = async () => {
-  //     const response = await axios.get("http://localhost:4000/todos");
+  //   const getCategories = async () => {
+  //     const response = await axios.get("http://localhost:4000/categories", {
+  //       user: loggedUser,
+  //     });
   //     console.log(response.data.message);
   //   };
-  //   getTodos();
+  //   getCategories();
   // }, []);
 
   // const submitHandler = async (e) => {

@@ -44,9 +44,13 @@ app.get("/todos", async (req, res) => {
   }
 });
 
-app.get("/categories", async (req, res) => {
+app.get("/categories", authMiddleware, async (req, res) => {
   try {
-    const categories = await Category.find({});
+    const { user } = req.body;
+    const categories = await Category.find({
+      user: user,
+    });
+    console.log(categories);
     return res.status(200).json({ message: "Get request authorised" });
   } catch (e) {
     console.log(e);
@@ -202,6 +206,7 @@ app.post("/register", async (req, res) => {
       process.env.JWT_SECRET
     );
     res.cookie("token", token);
+    res.cookie("user", username);
     res.status(200).json({ message: "User registered", user: username });
   } catch (e) {
     res.status(500).json({ message: e });
@@ -233,9 +238,40 @@ app.post("/login", async (req, res) => {
       process.env.JWT_SECRET
     );
     res.cookie("token", token);
+    res.cookie("user", username);
     res.status(200).json({ message: "User logged in", user: username });
   } catch (e) {
     res.status(500).json({ message: e });
+  }
+});
+
+app.get("/loggedin", async (req, res) => {
+  try {
+    const token = await req.cookies.token;
+    const user = await req.cookies.user;
+    if (!token) {
+      return res.json({
+        token: false,
+        user: undefined,
+      });
+    }
+    const verified = await jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) {
+      return res.json({
+        token: false,
+        user: undefined,
+      });
+    }
+    return res.json({
+      token: true,
+      user: user,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.json({
+      token: false,
+      user: undefined,
+    });
   }
 });
 

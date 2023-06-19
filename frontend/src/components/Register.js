@@ -24,8 +24,21 @@ const Register = () => {
         "http://localhost:4000/register",
         registerData
       );
-      console.log(result);
       setLoggedUser(result.data.user);
+      const workCategory = await axios.post(
+        "http://localhost:4000/categories/create",
+        {
+          title: "Work",
+          user: username,
+        }
+      );
+      const homeCategory = await axios.post(
+        "http://localhost:4000/categories/create",
+        {
+          title: "Home",
+          user: username,
+        }
+      );
       navigate("/");
     } catch (e) {
       setErrorState(e.response.data.message);

@@ -1,18 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./css/Navbar.css";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
 const Navbar = () => {
-  const { loggedUser, setLoggedUser } = useContext(UserContext);
+  const { loggedUser, setLoggedUser, getLoggedIn } = useContext(UserContext);
   const navigate = useNavigate();
 
   const logoutHandler = async () => {
     await axios.get("http://localhost:4000/logout");
-    setLoggedUser(null);
+    setLoggedUser(undefined);
+    await getLoggedIn();
     navigate("/");
   };
+
+  useEffect(() => {
+    getLoggedIn();
+  }, []);
 
   return (
     <nav>
@@ -22,7 +27,7 @@ const Navbar = () => {
         </div>
       </Link>
       <ul className="menu">
-        {!loggedUser && (
+        {loggedUser === undefined && (
           <>
             <Link to="/register">
               <li>Register</li>
