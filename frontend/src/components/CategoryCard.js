@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./css/CategoryCard.css";
 import { MdSchool, MdWork, MdHome } from "react-icons/md";
 import { RiTodoFill } from "react-icons/ri";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const CategoryCard = (props) => {
   const [progress, setProgress] = useState(0);
-  // need to add functionality above based on completeness
+
   return (
     <Link to="/todos" className="category-card">
       <div className="progress-bar">
@@ -26,7 +26,13 @@ const CategoryCard = (props) => {
         </div>
         <div className="category-text">
           <h5>{props.title}</h5>
-          <p>{props.tasks} Tasks</p>
+          {props.tasks === 0 ? (
+            <p>{props.tasks} Tasks</p>
+          ) : props.tasks === 1 ? (
+            <p>{props.tasks} Task</p>
+          ) : (
+            <p>{props.tasks} Tasks</p>
+          )}
         </div>
       </div>
     </Link>

@@ -1,0 +1,84 @@
+#create-todo h1 {
+    color: var(--primary-header);
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+#create-todo > input {
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-bottom: 1px solid var(--light-grey);
+    width: 100%;
+}
+
+#create-todo ul {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.create-todo-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.category-button {
+    font-size: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--primary-header);
+    width: fit-content;
+    border-radius: 10px;
+    padding: 10px 15px;
+    color: #fff;
+    border: 2px solid var(--primary-header);
+}
+
+.category-button:hover {
+    cursor: pointer;
+}
+
+.create-todo-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-header);
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 20px 0;
+}
+
+.create-todo-button:hover {
+    cursor: pointer;
+}
+
+.button-active {
+    color: var(--primary-header);
+    background-color: #fff;
+    border: 2px solid var(--primary-header);
+}
+
+@media (max-width: 768px) {
+
+    #create-todo h1 {
+        font-size: 22px;
+    }
+
+    .create-todo-option {
+        font-size: 14px;
+    }
+}

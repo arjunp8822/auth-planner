@@ -21,20 +21,36 @@ const Home = () => {
     fetchCategoryData();
   }, []);
 
+  const newCategory = () => {
+    const tempCategory = {
+      _id: "temp",
+      title: "temp",
+      todos: "temp",
+      user: "temp",
+    };
+    setCategories([...categories, tempCategory]);
+    console.log(categories);
+  };
+
   return (
     <>
       <Welcome />
-      <PrioritySlider />
-      <section className="category-container">
-        {categories.map((category) => (
-          <CategoryCard
-            key={category._id}
-            title={category.title}
-            tasks={category.todos.length}
-          />
-        ))}
-      </section>
-      <div className="add-category">
+      {loggedUser && (
+        <>
+          <PrioritySlider />
+          <section className="category-container">
+            {categories.length > 0 &&
+              categories.map((category) => (
+                <CategoryCard
+                  key={category._id}
+                  title={category.title}
+                  tasks={category.todos.length}
+                />
+              ))}
+          </section>
+        </>
+      )}
+      <div className="add-category" onClick={newCategory}>
         <BsPlusSquareFill />
       </div>
     </>

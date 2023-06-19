@@ -8,6 +8,8 @@ import Todo from "./Todo";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import CreateTodo from "./components/CreateTodo";
+import CreateCategory from "./components/CreateCategory";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -21,13 +23,6 @@ function App() {
 
   useEffect(() => {
     getLoggedIn();
-    const fetchCategoryData = async () => {
-      const result = await axios.get("http://localhost:4000/categories", {
-        user: loggedUser,
-      });
-      console.log(result);
-    };
-    fetchCategoryData();
   }, []);
 
   return (
@@ -41,6 +36,8 @@ function App() {
         <Route path="/todos" element={<Todo />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/newtask" element={<CreateTodo />} />
+        <Route path="/newcategory" element={<CreateCategory />} />
       </Routes>
     </UserContext.Provider>
   );
