@@ -5,10 +5,12 @@ import Welcome from "./components/Welcome";
 import PrioritySlider from "./components/PrioritySlider";
 import CategoryCard from "./components/CategoryCard";
 import { BsPlusSquareFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { loggedUser } = useContext(UserContext);
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   const fetchCategoryData = async () => {
     const result = await axios.get("http://localhost:4000/categories", {
@@ -22,14 +24,7 @@ const Home = () => {
   }, []);
 
   const newCategory = () => {
-    const tempCategory = {
-      _id: "temp",
-      title: "temp",
-      todos: "temp",
-      user: "temp",
-    };
-    setCategories([...categories, tempCategory]);
-    console.log(categories);
+    navigate("/newcategory");
   };
 
   return (
@@ -50,9 +45,11 @@ const Home = () => {
           </section>
         </>
       )}
-      <div className="add-category" onClick={newCategory}>
-        <BsPlusSquareFill />
-      </div>
+      {loggedUser && (
+        <div className="add-category" onClick={newCategory}>
+          <BsPlusSquareFill />
+        </div>
+      )}
     </>
   );
 };
