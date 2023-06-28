@@ -40,8 +40,11 @@ app.get("/test", authMiddleware, async (req, res) => {
     const userFull = await User.find({
       username: user,
     })
-      .populate("categories")
-      .populate("todos");
+      .populate(["categories", "todos"])
+      .populate({
+        path: "categories",
+        populate: { path: "todos" },
+      });
     return res.status(200).json(userFull);
   } catch (e) {
     console.log(e);

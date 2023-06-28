@@ -28,8 +28,6 @@ function App() {
     getLoggedIn();
   }, []);
 
-  console.log(userData);
-
   return (
     <UserContext.Provider
       className="App"

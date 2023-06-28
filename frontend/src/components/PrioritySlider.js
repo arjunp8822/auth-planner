@@ -6,25 +6,23 @@ import axios from "axios";
 
 const PrioritySlider = () => {
   const [sliderPosition, setSliderPosition] = useState(1);
-  const [categories, setCategories] = useState([]);
-  const { loggedUser, userData } = useContext(UserContext);
-  const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { userData } = useContext(UserContext);
+  const [sliderValue, setSliderValue] = useState("Low");
 
   const clickPriorityHandler = async (e) => {
-    setLoading(true);
     if (e.target.textContent === "Low") {
       setSliderPosition(1);
+      setSliderValue("Low");
     }
     if (e.target.textContent === "Medium") {
       setSliderPosition(2);
+      setSliderValue("Medium");
     }
     if (e.target.textContent === "Urgent") {
       setSliderPosition(3);
+      setSliderValue("Urgent");
     }
   };
-
-  console.log(userData.categories);
 
   return (
     <>
@@ -70,9 +68,24 @@ const PrioritySlider = () => {
       </section>
       <section className="category-container">
         {userData.categories.length > 0 &&
-          userData.categories.map((category) => (
-            <CategoryCard key={category._id} title={category.title} tasks={1} />
-          ))}
+          userData.categories.map(
+            (category) =>
+              userData.categories
+                .filter((cat) => category.title === cat.title)[0]
+                .todos.filter((todo) => todo.status === sliderValue).length >
+                0 && (
+                <CategoryCard
+                  key={category._id}
+                  title={category.title}
+                  tasks={
+                    userData.categories
+                      .filter((cat) => category.title === cat.title)[0]
+                      .todos.filter((todo) => todo.status === sliderValue)
+                      .length
+                  }
+                />
+              )
+          )}
         {userData.categories.length === 0 && <div>None exist</div>}
       </section>
     </>
