@@ -15,20 +15,32 @@ axios.defaults.withCredentials = true;
 function App() {
   const [loggedUser, setLoggedUser] = useState(undefined);
   const [loggedIn, setLoggedIn] = useState(undefined);
+  const [userData, setUserData] = useState({});
 
   const getLoggedIn = async () => {
     const result = await axios.get("http://localhost:4000/loggedin");
+    const userInfo = await axios.get("http://localhost:4000/test");
     setLoggedUser(result.data.user);
+    setUserData(userInfo.data[0]);
   };
 
   useEffect(() => {
     getLoggedIn();
   }, []);
 
+  console.log(userData);
+
   return (
     <UserContext.Provider
       className="App"
-      value={{ loggedUser, setLoggedUser, loggedIn, getLoggedIn }}
+      value={{
+        loggedUser,
+        setLoggedUser,
+        loggedIn,
+        getLoggedIn,
+        userData,
+        setUserData,
+      }}
     >
       <Navbar />
       <Routes>

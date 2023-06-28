@@ -34,6 +34,21 @@ app.use(express.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieparser());
 
+app.get("/test", authMiddleware, async (req, res) => {
+  try {
+    const { user } = req.cookies;
+    const userFull = await User.find({
+      username: user,
+    })
+      .populate("categories")
+      .populate("todos");
+    return res.status(200).json(userFull);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.get("/todos", async (req, res) => {
   try {
     const { user } = req.cookies;
