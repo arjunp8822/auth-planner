@@ -51,6 +51,29 @@
     top: 30px;
 }
 
+.category-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.category-label-num {
+    border: 2px solid #ecaf70;
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: var(--grey);
+}
+
+.category-label-num-active {
+    color: var(--primary-header);
+}
+
 @media (max-width: 768px) {
     #priority li {
         width: 100px;

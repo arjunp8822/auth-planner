@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import "./css/PrioritySlider.css";
 
-const PrioritySlider = () => {
+const PrioritySlider = (props) => {
   const [sliderPosition, setSliderPosition] = useState(1);
+  console.log(props.priority);
   return (
     <section id="priority">
       <div className="slider">
         <ul>
-          <li onClick={() => setSliderPosition(1)}>LOW</li>
-          <li onClick={() => setSliderPosition(2)}>MEDIUM</li>
-          <li onClick={() => setSliderPosition(3)}>URGENT</li>
+          <li className="category-label" onClick={() => setSliderPosition(1)}>
+            <span>LOW</span>
+            <span className="category-label-num">{props.priority.low}</span>
+          </li>
+          <li className="category-label" onClick={() => setSliderPosition(2)}>
+            <span>MEDIUM</span>
+            <span className="category-label-num">{props.priority.medium}</span>
+          </li>
+          <li className="category-label" onClick={() => setSliderPosition(3)}>
+            <span>URGENT</span>
+            <span className="category-label-num">{props.priority.urgent}</span>
+          </li>
         </ul>
         <div
           className={

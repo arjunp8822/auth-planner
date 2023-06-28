@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const { loggedUser } = useContext(UserContext);
   const [categories, setCategories] = useState([]);
+  const [todoPriority, setTodoPriority] = useState({});
   const navigate = useNavigate();
 
   const fetchCategoryData = async () => {
@@ -19,8 +20,38 @@ const Home = () => {
     setCategories(result.data);
   };
 
+  const fetchTodoData = async () => {
+    const result = await axios.get("http://localhost:4000/todos", {
+      user: loggedUser,
+    });
+
+    setTodoPriority({
+      low: result.data.filter((todo) => {
+        if (todo.status === "Low") {
+          return true;
+        }
+        return false;
+      }).length,
+      medium: result.data.filter((todo) => {
+        if (todo.status === "Medium") {
+          return true;
+        }
+        return false;
+      }).length,
+      urgent: result.data.filter((todo) => {
+        if (todo.status === "Urgent") {
+          return true;
+        }
+        return false;
+      }).length,
+    });
+  };
+
+  console.log(todoPriority);
+
   useEffect(() => {
     fetchCategoryData();
+    fetchTodoData();
   }, []);
 
   const newCategory = () => {
@@ -32,7 +63,7 @@ const Home = () => {
       <Welcome />
       {loggedUser && (
         <>
-          <PrioritySlider />
+          <PrioritySlider priority={todoPriority} />
           <section className="category-container">
             {categories.length > 0 &&
               categories.map((category) => (

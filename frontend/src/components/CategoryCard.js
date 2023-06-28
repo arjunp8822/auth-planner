@@ -8,7 +8,7 @@ const CategoryCard = (props) => {
   const [progress, setProgress] = useState(0);
 
   return (
-    <Link to="/todos" className="category-card">
+    <Link to={`/todos/${props.title}`} className="category-card">
       <div className="progress-bar">
         <div className="progress"></div>
       </div>

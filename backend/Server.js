@@ -36,8 +36,16 @@ app.use(cookieparser());
 
 app.get("/todos", async (req, res) => {
   try {
-    const todos = await Todo.find({}).populate("category");
-    return res.status(200).json({ message: "Get request authorised" });
+    const { user } = req.cookies;
+    const userFull = await User.find({
+      username: user,
+    });
+    // console.log(userFull);
+    const todos = await Todo.find({
+      user: userFull,
+    });
+    console.log(todos);
+    return res.status(200).json(todos);
   } catch (e) {
     console.log(e);
     return res.status(500).json({ message: "Internal server error" });
@@ -51,7 +59,6 @@ app.get("/categories", authMiddleware, async (req, res) => {
       username: user,
     });
     const categories = await Category.find({ user: userFull });
-    console.log(categories);
     return res.status(200).json(categories);
   } catch (e) {
     console.log(e);
@@ -149,6 +156,7 @@ app.post("/todos/create", authMiddleware, async (req, res) => {
       title: title,
       status: status,
       category: foundCategory._id,
+      user: foundUser._id,
     });
     const savedTodo = await newTodo.save();
 
