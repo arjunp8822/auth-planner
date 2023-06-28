@@ -100,7 +100,7 @@ app.get("/users/:id", async (req, res) => {
   }
 });
 
-app.get("/categories/:id", async (req, res) => {
+app.get("/categories/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const category = await Category.findById(id).populate("todos");
@@ -114,11 +114,10 @@ app.get("/categories/:id", async (req, res) => {
   }
 });
 
-app.get("/todos/:id", async (req, res) => {
+app.get("/todos/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const todo = await Todo.findById(id);
-    console.log(todo);
     if (!todo) {
       return res.status(500).json({ message: "No todo found" });
     }

@@ -83,6 +83,7 @@ const PrioritySlider = () => {
                       .todos.filter((todo) => todo.status === sliderValue)
                       .length
                   }
+                  id={category._id}
                 />
               )
           )}

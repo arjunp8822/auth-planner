@@ -43,11 +43,11 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/todos" element={<Todo />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/newtask" element={<CreateTodo />} />
         <Route path="/newcategory" element={<CreateCategory />} />
+        <Route path="/todos/:category_id" element={<Todo />} />
       </Routes>
     </UserContext.Provider>
   );
