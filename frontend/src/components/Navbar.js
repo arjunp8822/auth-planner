@@ -5,12 +5,14 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
 const Navbar = () => {
-  const { loggedUser, setLoggedUser, getLoggedIn } = useContext(UserContext);
+  const { loggedUser, setLoggedUser, getLoggedIn, setLoggedIn } =
+    useContext(UserContext);
   const navigate = useNavigate();
 
   const logoutHandler = async () => {
     await axios.get("http://localhost:4000/logout");
     setLoggedUser(undefined);
+    setLoggedIn(undefined);
     await getLoggedIn();
     navigate("/");
   };

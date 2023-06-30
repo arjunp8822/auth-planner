@@ -6,7 +6,7 @@ import axios from "axios";
 
 const PrioritySlider = () => {
   const [sliderPosition, setSliderPosition] = useState(1);
-  const { userData } = useContext(UserContext);
+  const { userTodos, userCategories } = useContext(UserContext);
   const [sliderValue, setSliderValue] = useState("Low");
 
   const clickPriorityHandler = async (e) => {
@@ -36,19 +36,19 @@ const PrioritySlider = () => {
             >
               <span>Low</span>
               <span className="category-label-num">
-                {userData.todos.filter((x) => x.status === "Low").length}
+                {userTodos.filter((x) => x.status === "Low").length}
               </span>
             </li>
             <li className="category-label" onClick={clickPriorityHandler}>
               <span>Medium</span>
               <span className="category-label-num">
-                {userData.todos.filter((x) => x.status === "Medium").length}
+                {userTodos.filter((x) => x.status === "Medium").length}
               </span>
             </li>
             <li className="category-label" onClick={clickPriorityHandler}>
               <span>Urgent</span>
               <span className="category-label-num">
-                {userData.todos.filter((x) => x.status === "Urgent").length}
+                {userTodos.filter((x) => x.status === "Urgent").length}
               </span>
             </li>
           </ul>
@@ -67,10 +67,10 @@ const PrioritySlider = () => {
         </div>
       </section>
       <section className="category-container">
-        {userData.categories.length > 0 &&
-          userData.categories.map(
+        {userCategories.length > 0 &&
+          userCategories.map(
             (category) =>
-              userData.categories
+              userCategories
                 .filter((cat) => category.title === cat.title)[0]
                 .todos.filter((todo) => todo.status === sliderValue).length >
                 0 && (
@@ -78,7 +78,7 @@ const PrioritySlider = () => {
                   key={category._id}
                   title={category.title}
                   tasks={
-                    userData.categories
+                    userCategories
                       .filter((cat) => category.title === cat.title)[0]
                       .todos.filter((todo) => todo.status === sliderValue)
                       .length
@@ -87,7 +87,7 @@ const PrioritySlider = () => {
                 />
               )
           )}
-        {userData.categories.length === 0 && <div>None exist</div>}
+        {userCategories.length === 0 && <div>None exist</div>}
       </section>
     </>
   );

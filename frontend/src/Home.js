@@ -10,8 +10,10 @@ const Home = () => {
   const { loggedUser } = useContext(UserContext);
   const [todoPriority, setTodoPriority] = useState({});
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const fetchTodoData = async () => {
+    setLoading(true);
     const result = await axios.get("http://localhost:4000/todos", {
       user: loggedUser,
     });
@@ -36,6 +38,7 @@ const Home = () => {
         return false;
       }).length,
     });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -48,16 +51,22 @@ const Home = () => {
 
   return (
     <>
-      <Welcome />
-      {loggedUser && (
+      {loading ? (
+        <div>Loading</div>
+      ) : (
         <>
-          <PrioritySlider priority={todoPriority} />
+          <Welcome />
+          {loggedUser && (
+            <>
+              <PrioritySlider priority={todoPriority} />
+            </>
+          )}
+          {loggedUser && (
+            <div className="add-category" onClick={newCategory}>
+              <BsPlusSquareFill />
+            </div>
+          )}
         </>
-      )}
-      {loggedUser && (
-        <div className="add-category" onClick={newCategory}>
-          <BsPlusSquareFill />
-        </div>
       )}
     </>
   );

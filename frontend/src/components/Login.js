@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./css/Login.css";
 import { UserContext } from "../context/UserContext";
@@ -9,21 +9,24 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errorState, setErrorState] = useState(null);
   const navigate = useNavigate();
-  const { setLoggedUser, setUserData } = useContext(UserContext);
+  const { setLoggedUser, setAuthLoading, setUserTodos, setUserCategories } =
+    useContext(UserContext);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setAuthLoading(true);
     try {
       const loginData = {
         username: username,
         password: password,
       };
       const result = await axios.post("http://localhost:4000/login", loginData);
-      setLoggedUser(result.data.user);
+      await setLoggedUser(result.data.user);
 
       const userInfo = await axios.get("http://localhost:4000/test");
-      setUserData(userInfo.data);
-
+      setUserCategories(userInfo.data[0].categories);
+      setUserTodos(userInfo.data[0].todos);
+      setAuthLoading(false);
       navigate("/");
     } catch (e) {
       setErrorState(e.response.data.message);
