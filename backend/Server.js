@@ -126,6 +126,20 @@ app.get("/todos/:id", authMiddleware, async (req, res) => {
   }
 });
 
+app.put("/todos/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const update = await Todo.findByIdAndUpdate(id, {
+      title: req.body.title,
+      isComplete: req.body.isComplete,
+    });
+    return res.status(200).json({ message: "Put request authorised" });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.post("/categories/create", authMiddleware, async (req, res) => {
   try {
     const { title, user } = req.body;

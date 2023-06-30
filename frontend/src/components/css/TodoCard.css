@@ -13,16 +13,27 @@
     gap: 20px;
 }
 
-.todocard button {
+.todocard-button-container button {
     padding: 5px 10px;
     border-radius: 5px;
     border: none;
-    background-color: var(--error);
+    background-color: red;
     color: #fff;
 }
 
-.todocard button:hover {
+.todocard-button-container .edit-button {
+    background-color: green;
+}
+
+.todocard-button-container button:hover {
     cursor: pointer;
+}
+
+.todocard-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .checkbox {
@@ -45,6 +56,13 @@
 
 .todo-text {
     font-size: 15px;
+    padding: 5px;
+}
+
+.todo-text-input {
+    border-radius: 5px;
+    border: 1px solid var(--light-grey);
+    width: 100%;
 }
 
 .complete {

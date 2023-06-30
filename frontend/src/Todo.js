@@ -87,7 +87,11 @@ const Todo = () => {
             {categoryData.todos
               .filter((x) => x.status === "Urgent")
               .map((todo) => (
-                <TodoCard title={todo.title} id={todo._id} />
+                <TodoCard
+                  title={todo.title}
+                  id={todo._id}
+                  isComplete={todo.isComplete}
+                />
               ))}
             <div>
               <form className="add-todo">
@@ -105,7 +109,11 @@ const Todo = () => {
             {categoryData.todos
               .filter((x) => x.status === "Medium")
               .map((todo) => (
-                <TodoCard title={todo.title} id={todo._id} />
+                <TodoCard
+                  title={todo.title}
+                  id={todo._id}
+                  isComplete={todo.isComplete}
+                />
               ))}
             <form className="add-todo">
               <button onClick={createMediumSubmitHandler} value="Medium">
@@ -121,7 +129,11 @@ const Todo = () => {
             {categoryData.todos
               .filter((x) => x.status === "Low")
               .map((todo) => (
-                <TodoCard title={todo.title} id={todo._id} />
+                <TodoCard
+                  title={todo.title}
+                  id={todo._id}
+                  isComplete={todo.isComplete}
+                />
               ))}
             <form className="add-todo">
               <button onClick={createLowSubmitHandler} value="Low">
