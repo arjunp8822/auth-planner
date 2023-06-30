@@ -43,7 +43,7 @@ const Todo = () => {
             {categoryData.todos
               .filter((x) => x.status === "Urgent")
               .map((todo) => (
-                <TodoCard title={todo.title} />
+                <TodoCard title={todo.title} id={todo._id} />
               ))}
             <div className="add-todo">
               <BsPlusSquareFill />
@@ -53,7 +53,7 @@ const Todo = () => {
             {categoryData.todos
               .filter((x) => x.status === "Medium")
               .map((todo) => (
-                <TodoCard title={todo.title} />
+                <TodoCard title={todo.title} id={todo._id} />
               ))}
             <div className="add-todo">
               <BsPlusSquareFill />
@@ -63,7 +63,7 @@ const Todo = () => {
             {categoryData.todos
               .filter((x) => x.status === "Low")
               .map((todo) => (
-                <TodoCard title={todo.title} />
+                <TodoCard title={todo.title} id={todo._id} />
               ))}
             <div className="add-todo">
               <BsPlusSquareFill />

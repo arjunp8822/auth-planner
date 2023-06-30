@@ -58,11 +58,9 @@ app.get("/todos", async (req, res) => {
     const userFull = await User.find({
       username: user,
     });
-    // console.log(userFull);
     const todos = await Todo.find({
       user: userFull,
     });
-    console.log(todos);
     return res.status(200).json(todos);
   } catch (e) {
     console.log(e);
@@ -298,6 +296,17 @@ app.get("/loggedin", async (req, res) => {
       token: false,
       user: undefined,
     });
+  }
+});
+
+app.delete("/todos/:id", authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await Todo.findByIdAndDelete(id);
+    res.json({ Message: "Item Deleted" });
+  } catch (e) {
+    console.log(e);
+    res.json({ Message: "Internal server error" });
   }
 });
 
