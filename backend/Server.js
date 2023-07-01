@@ -140,6 +140,19 @@ app.put("/todos/:id", authMiddleware, async (req, res) => {
   }
 });
 
+app.put("/categories/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const update = await Category.findByIdAndUpdate(id, {
+      title: req.body.title,
+    });
+    return res.status(200).json({ message: "Put request authorised" });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.post("/categories/create", authMiddleware, async (req, res) => {
   try {
     const { title, user } = req.body;
@@ -327,7 +340,7 @@ app.delete("/todos/:id", authMiddleware, async (req, res) => {
 app.delete("/categories/:id", authMiddleware, async (req, res) => {
   const { id } = req.params;
   try {
-    const response = await Todo.findByIdAndDelete(id);
+    const response = await Category.findByIdAndDelete(id);
     res.json({ Message: "Item Deleted" });
   } catch (e) {
     console.log(e);

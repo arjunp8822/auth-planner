@@ -32,7 +32,7 @@ const CreateCategory = () => {
       <h1>Add new category</h1>
       <input
         type="text"
-        placeholder="E.g. Wash the clothes"
+        placeholder="E.g. Work"
         onChange={(e) => setCategory(e.target.value)}
       />
       <form>

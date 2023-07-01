@@ -20,6 +20,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [authLoading, setAuthLoading] = useState(true);
   const [editCategory, setEditCategory] = useState(false);
+  const [detectProgressUpdate, setDetectProgressUpdate] = useState(false);
 
   const getLoggedIn = async () => {
     const result = await axios.get("http://localhost:4000/loggedin");
@@ -36,9 +37,29 @@ function App() {
     setLoading(false);
   };
 
+  const updateProgress = async () => {
+    const userInfo = await axios.get("http://localhost:4000/test");
+    if (userInfo.data[0]) {
+      userInfo.data[0].categories.forEach((cat) => {
+        const complete = cat.todos.filter(
+          (todo) => todo.isComplete === true
+        ).length;
+        const total = cat.todos.length;
+        const categoryData = {
+          title: cat.title,
+          complete: Math.floor((complete / total) * 100),
+        };
+      });
+    }
+  };
+
   useEffect(() => {
     getLoggedIn();
   }, []);
+
+  useEffect(() => {
+    updateProgress();
+  }, [detectProgressUpdate]);
 
   return (
     <>
@@ -62,6 +83,8 @@ function App() {
               setUserTodos,
               editCategory,
               setEditCategory,
+              detectProgressUpdate,
+              setDetectProgressUpdate,
             }}
           >
             <Navbar />

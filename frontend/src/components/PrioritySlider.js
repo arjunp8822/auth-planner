@@ -24,6 +24,8 @@ const PrioritySlider = () => {
     }
   };
 
+  console.log(userCategories);
+
   return (
     <>
       <section id="priority">
@@ -83,6 +85,9 @@ const PrioritySlider = () => {
                       .todos.filter((todo) => todo.status === sliderValue)
                       .length
                   }
+                  taskArray={userCategories
+                    .filter((cat) => category.title === cat.title)[0]
+                    .todos.filter((todo) => todo.status === sliderValue)}
                   id={category._id}
                 />
               )

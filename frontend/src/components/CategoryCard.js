@@ -7,8 +7,7 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
 const CategoryCard = (props) => {
-  const [progress, setProgress] = useState(0);
-  const { editCategory } = useContext(UserContext);
+  const { editCategory, detectProgressUpdate } = useContext(UserContext);
 
   const deleteCategoryHandler = async (e) => {
     e.preventDefault();
@@ -24,10 +23,15 @@ const CategoryCard = (props) => {
       console.log(deleteTodo);
     });
     const deleteCategory = await axios.delete(
-      `http://localhost:4000/todos/${id}`
+      `http://localhost:4000/categories/${id}`
     );
     window.location.reload(false);
   };
+
+  const progress =
+    (props.taskArray.filter((x) => x.isComplete === true).length /
+      props.taskArray.length) *
+    100;
 
   return (
     <Link to={`/todos/${props.id}`} className="category-card">
@@ -37,20 +41,21 @@ const CategoryCard = (props) => {
         </button>
       )}
       <div className="progress-bar">
-        <div className="progress"></div>
+        {(() => {
+          if (progress <= 20) {
+            return <div className="progress progress-20"></div>;
+          } else if (progress <= 40) {
+            return <div className="progress progress-40"></div>;
+          } else if (progress <= 60) {
+            return <div className="progress progress-60"></div>;
+          } else if (progress <= 80) {
+            return <div className="progress progress-80"></div>;
+          } else {
+            return <div className="progress"></div>;
+          }
+        })()}
       </div>
       <div className="category-box">
-        <div className="category-icon">
-          {props.title.toUpperCase() === "WORK" ? (
-            <MdWork />
-          ) : props.title.toUpperCase() === "HOME" ? (
-            <MdHome />
-          ) : props.title.toUpperCase() === "SCHOOL" ? (
-            <MdSchool />
-          ) : (
-            <RiTodoFill />
-          )}
-        </div>
         <div className="category-text">
           <h5>{props.title}</h5>
           {props.tasks === 0 ? (

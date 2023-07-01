@@ -42,7 +42,6 @@ const Home = () => {
   };
 
   const editCategoryHandler = async () => {
-    console.log("edit category");
     setEditCategory(!editCategory);
   };
 

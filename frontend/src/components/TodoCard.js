@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./css/TodoCard.css";
 import { BsCheck2 } from "react-icons/bs";
 import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
 const TodoCard = (props) => {
   const [checkboxState, setCheckboxState] = useState(props.isComplete);
   const [editState, setEditState] = useState(false);
   const [editTitle, setEditTitle] = useState("");
+  const { detectProgressUpdate, setDetectProgressUpdate } =
+    useContext(UserContext);
 
   const deleteHandler = async (e) => {
     const id = props.id;
@@ -36,6 +39,7 @@ const TodoCard = (props) => {
       isComplete: !checkboxState,
     });
     setCheckboxState(!checkboxState);
+    setDetectProgressUpdate(!detectProgressUpdate);
   };
 
   useEffect(() => {}, [checkboxState, editState]);
