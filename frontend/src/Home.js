@@ -41,6 +41,10 @@ const Home = () => {
     setLoading(false);
   };
 
+  const editCategoryHandler = async () => {
+    console.log("edit category");
+  };
+
   useEffect(() => {
     fetchTodoData();
   }, []);
@@ -62,8 +66,11 @@ const Home = () => {
             </>
           )}
           {loggedUser && (
-            <div className="add-category" onClick={newCategory}>
-              <BsPlusSquareFill />
+            <div className="category-button-container">
+              <button className="add-category" onClick={newCategory}>
+                +
+              </button>
+              <button onClick={editCategoryHandler}>Edit</button>
             </div>
           )}
         </>

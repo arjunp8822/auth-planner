@@ -10,11 +10,21 @@ const CreateCategory = () => {
   const navigate = useNavigate();
 
   const CreateCategory = async () => {
-    const post = await axios.post("http://localhost:4000/categories/create", {
-      title: category,
+    const postCategory = await axios.post(
+      "http://localhost:4000/categories/create",
+      {
+        title: category,
+        user: loggedUser,
+      }
+    );
+    const postTodo = await axios.post("http://localhost:4000/todos/create", {
+      title: "Enter your first task",
+      status: "Low",
+      category: category,
       user: loggedUser,
     });
     navigate("/");
+    window.location.reload(false);
   };
 
   return (

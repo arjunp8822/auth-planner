@@ -44,16 +44,29 @@ a {
     flex-wrap: wrap;
 }
 
-.add-category {
+.category-button-container {
     position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--primary-header);
-    font-size: 60px;
     bottom: 40px;
     left: 40px;
     z-index: 5;
+    gap: 20px;
+}   
+
+.category-button-container button {
+    background-color: var(--primary-header);
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    padding: 15px;
+    min-width: 50px;
+}
+
+.category-button-container button:hover {
+    cursor: pointer;
 }
 
 .add-category:hover {
@@ -144,5 +157,16 @@ a {
     
     .todo-content {
         margin-top: 30px;
+    }
+
+    .category-button-container {
+        bottom: 30px;
+        left: 30px;
+        gap: 10px;
+    }   
+    
+    .category-button-container button {
+        font-size: 12px;
+        padding: 10px;
     }
 }
