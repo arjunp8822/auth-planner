@@ -324,4 +324,15 @@ app.delete("/todos/:id", authMiddleware, async (req, res) => {
   }
 });
 
+app.delete("/categories/:id", authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await Todo.findByIdAndDelete(id);
+    res.json({ Message: "Item Deleted" });
+  } catch (e) {
+    console.log(e);
+    res.json({ Message: "Internal server error" });
+  }
+});
+
 app.listen(4000);

@@ -7,7 +7,7 @@ import { BsPlusSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const { loggedUser } = useContext(UserContext);
+  const { loggedUser, editCategory, setEditCategory } = useContext(UserContext);
   const [todoPriority, setTodoPriority] = useState({});
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -43,6 +43,7 @@ const Home = () => {
 
   const editCategoryHandler = async () => {
     console.log("edit category");
+    setEditCategory(!editCategory);
   };
 
   useEffect(() => {
@@ -70,7 +71,9 @@ const Home = () => {
               <button className="add-category" onClick={newCategory}>
                 +
               </button>
-              <button onClick={editCategoryHandler}>Edit</button>
+              <button onClick={editCategoryHandler}>
+                {editCategory ? "Done" : "Edit"}
+              </button>
             </div>
           )}
         </>

@@ -19,6 +19,7 @@ function App() {
   const [userTodos, setUserTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [authLoading, setAuthLoading] = useState(true);
+  const [editCategory, setEditCategory] = useState(false);
 
   const getLoggedIn = async () => {
     const result = await axios.get("http://localhost:4000/loggedin");
@@ -59,6 +60,8 @@ function App() {
               userTodos,
               setUserCategories,
               setUserTodos,
+              editCategory,
+              setEditCategory,
             }}
           >
             <Navbar />
