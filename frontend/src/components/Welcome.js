@@ -7,9 +7,9 @@ const Welcome = () => {
   return (
     <section id="welcome">
       {loggedUser && (
-        <h1>
-          Hey <span>{loggedUser}</span>, this is your to-do list.
-        </h1>
+        <h3>
+          Hey <span>{loggedUser}</span>, these are your tasks.
+        </h3>
       )}
       {!loggedUser && <h1>Please log in to see your tasks.</h1>}
     </section>

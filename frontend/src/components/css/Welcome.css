@@ -1,15 +1,8 @@
-#welcome h1 {
-    color: var(--secondary-header);
-    font-size: 32px;
+#welcome h3 {
+    color: var(--text-grey);
 }
 
 #welcome span {
-    color: var(--primary-header);
+    color: var(--text-main);
     text-transform: capitalize;
-}
-
-@media (max-width: 768px) {
-    #welcome h1 {
-        font-size: 22px;
-    }
 }

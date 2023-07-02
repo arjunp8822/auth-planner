@@ -5,69 +5,80 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
 const PrioritySlider = () => {
-  const [sliderPosition, setSliderPosition] = useState(1);
   const { userTodos, userCategories } = useContext(UserContext);
   const [sliderValue, setSliderValue] = useState("Low");
+  const [loading, setLoading] = useState(true);
 
   const clickPriorityHandler = async (e) => {
     if (e.target.textContent === "Low") {
-      setSliderPosition(1);
+      setLoading(true);
       setSliderValue("Low");
+      setLoading(false);
     }
     if (e.target.textContent === "Medium") {
-      setSliderPosition(2);
+      setLoading(true);
       setSliderValue("Medium");
+      setLoading(false);
     }
     if (e.target.textContent === "Urgent") {
-      setSliderPosition(3);
+      setLoading(true);
       setSliderValue("Urgent");
+      setLoading(false);
     }
   };
 
   return (
     <>
       <section id="priority">
-        <div className="slider">
-          <ul>
-            <li
-              className="category-label"
-              onClick={clickPriorityHandler}
-              value="Low"
-            >
-              <span>Low</span>
-              <span className="category-label-num">
-                {userTodos.filter((x) => x.status === "Low").length}
-              </span>
-            </li>
-            <li className="category-label" onClick={clickPriorityHandler}>
-              <span>Medium</span>
-              <span className="category-label-num">
-                {userTodos.filter((x) => x.status === "Medium").length}
-              </span>
-            </li>
-            <li className="category-label" onClick={clickPriorityHandler}>
-              <span>Urgent</span>
-              <span className="category-label-num">
-                {userTodos.filter((x) => x.status === "Urgent").length}
-              </span>
-            </li>
-          </ul>
-          <div
+        <ul>
+          <li
             className={
-              sliderPosition === 1
-                ? "slide position-one"
-                : sliderPosition === 2
-                ? "slide position-two"
-                : sliderPosition === 3
-                ? "slide position-three"
-                : "slide"
+              sliderValue === "Low"
+                ? "category-label-active category-label"
+                : "category-label"
             }
-          ></div>
-          <div className="inactive-slider"></div>
-        </div>
+            onClick={clickPriorityHandler}
+            value="Low"
+          >
+            <span>Low</span>
+            <span className="category-label-num">
+              {userTodos.filter((x) => x.status === "Low").length}
+            </span>
+          </li>
+          <li
+            className={
+              sliderValue === "Medium"
+                ? "category-label-active category-label"
+                : "category-label"
+            }
+            onClick={clickPriorityHandler}
+          >
+            <span>Medium</span>
+            <span className="category-label-num">
+              {userTodos.filter((x) => x.status === "Medium").length}
+            </span>
+          </li>
+          <li
+            className={
+              sliderValue === "Urgent"
+                ? "category-label-active category-label"
+                : "category-label"
+            }
+            onClick={clickPriorityHandler}
+          >
+            <span>Urgent</span>
+            <span className="category-label-num">
+              {userTodos.filter((x) => x.status === "Urgent").length}
+            </span>
+          </li>
+        </ul>
       </section>
+
       <section className="category-container">
-        {userCategories.length > 0 &&
+        {loading ? (
+          <div>Loading</div>
+        ) : (
+          userCategories.length > 0 &&
           userCategories.map(
             (category) =>
               userCategories
@@ -89,8 +100,11 @@ const PrioritySlider = () => {
                   id={category._id}
                 />
               )
-          )}
-        {userCategories.length === 0 && <div>None exist</div>}
+          )
+        )}
+        {userCategories.length === 0 && (
+          <div>Add your first category below!</div>
+        )}
       </section>
     </>
   );

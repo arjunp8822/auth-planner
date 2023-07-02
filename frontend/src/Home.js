@@ -5,6 +5,7 @@ import Welcome from "./components/Welcome";
 import PrioritySlider from "./components/PrioritySlider";
 import { useNavigate } from "react-router-dom";
 import BannerImg from "./assets/banner-removebg.png";
+import { FaLongArrowAltRight } from "react-icons/fa";
 import "./Home.css";
 
 const Home = () => {
@@ -64,33 +65,39 @@ const Home = () => {
             This productive tool is designed to help you better manage your
             tasks conveniently!
           </p>
-          <button>
-            <p>Lets Start</p>
+          <button className="start-button">
+            <a href="#home">
+              <p>Lets Start</p>
+              <FaLongArrowAltRight />
+            </a>
           </button>
         </div>
       </section>
-      {loading ? (
-        <div>Loading</div>
-      ) : (
-        <>
-          <Welcome />
-          {loggedUser && (
-            <>
-              <PrioritySlider priority={todoPriority} />
-            </>
-          )}
-          {loggedUser && (
-            <div className="category-button-container">
-              <button className="add-category" onClick={newCategory}>
-                +
-              </button>
-              <button onClick={editCategoryHandler}>
-                {editCategory ? "Done" : "Edit"}
-              </button>
-            </div>
-          )}
-        </>
-      )}
+
+      <section id="home">
+        {loading ? (
+          <div>Loading</div>
+        ) : (
+          <>
+            <Welcome />
+            {loggedUser && (
+              <>
+                <PrioritySlider priority={todoPriority} />
+              </>
+            )}
+            {loggedUser && (
+              <div className="category-button-container">
+                <button className="add-category" onClick={newCategory}>
+                  +
+                </button>
+                <button onClick={editCategoryHandler}>
+                  {editCategory ? "Done" : "Edit"}
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </section>
     </>
   );
 };
