@@ -26,7 +26,7 @@ a {
     --primary-header: #262040;
     --secondary-header: #868394;
     --light-grey: rgb(230, 230, 230);
-    --grey: rgb(165, 165, 165);
+    
     --error: #fc5555;
 
     --primary: #fff;
@@ -35,12 +35,14 @@ a {
     --error-bg: #ede8ff;
     --error-main: #f478b8;
     --text-main: #24252c;
-    --second-cta: #ffe9e1;
-    --second-cta-secondary: #ff936f;
+    --second-cta: #ff8153;
+    --second-cta-secondary: #ffded3;
     --text-grey: rgb(120, 120, 120);
+    --light-grey: rgb(165, 165, 165);
 
     --button-padding: 15px 20px;
     --border-radius: 10px;
+    --box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
 }
 
 section {
@@ -71,7 +73,7 @@ h5 {
 }
 
 p {
-    font-size: clamp(1rem, 2.8vw, 1.3rem)
+    font-size: clamp(0.8rem, 2vw, 1rem)
 }
 
 .category-container {

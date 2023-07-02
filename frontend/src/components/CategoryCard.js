@@ -4,7 +4,9 @@ import { MdSchool, MdWork, MdHome } from "react-icons/md";
 import { RiTodoFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { RiFileListFill } from "react-icons/ri";
 import axios from "axios";
+import ProgressBar from "./ProgressBar";
 
 const CategoryCard = (props) => {
   const { editCategory, detectProgressUpdate } = useContext(UserContext);
@@ -40,32 +42,25 @@ const CategoryCard = (props) => {
           X
         </button>
       )}
-      <div className="progress-bar">
-        {(() => {
-          if (progress <= 20) {
-            return <div className="progress progress-20"></div>;
-          } else if (progress <= 40) {
-            return <div className="progress progress-40"></div>;
-          } else if (progress <= 60) {
-            return <div className="progress progress-60"></div>;
-          } else if (progress <= 80) {
-            return <div className="progress progress-80"></div>;
-          } else {
-            return <div className="progress"></div>;
-          }
-        })()}
-      </div>
       <div className="category-box">
-        <div className="category-text">
-          <h5>{props.title}</h5>
-          {props.tasks === 0 ? (
-            <p>{props.tasks} Tasks</p>
-          ) : props.tasks === 1 ? (
-            <p>{props.tasks} Task</p>
-          ) : (
-            <p>{props.tasks} Tasks</p>
-          )}
+        <div className="category-box-left">
+          <i>
+            <RiFileListFill />
+          </i>
+          <div className="category-text">
+            <h5>{props.title}</h5>
+            {props.tasks === 0 ? (
+              <p>{props.tasks} Tasks</p>
+            ) : props.tasks === 1 ? (
+              <p>{props.tasks} Task</p>
+            ) : (
+              <p>{props.tasks} Tasks</p>
+            )}
+          </div>
         </div>
+        <span>
+          <ProgressBar progress={progress} />
+        </span>
       </div>
     </Link>
   );

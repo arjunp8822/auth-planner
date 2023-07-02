@@ -29,7 +29,7 @@ const PrioritySlider = () => {
 
   return (
     <>
-      <section id="priority">
+      <div id="priority">
         <ul>
           <li
             className={
@@ -72,13 +72,10 @@ const PrioritySlider = () => {
             </span>
           </li>
         </ul>
-      </section>
+      </div>
 
-      <section className="category-container">
-        {loading ? (
-          <div>Loading</div>
-        ) : (
-          userCategories.length > 0 &&
+      <div className="category-container">
+        {userCategories.length > 0 &&
           userCategories.map(
             (category) =>
               userCategories
@@ -100,12 +97,11 @@ const PrioritySlider = () => {
                   id={category._id}
                 />
               )
-          )
-        )}
+          )}
         {userCategories.length === 0 && (
           <div>Add your first category below!</div>
         )}
-      </section>
+      </div>
     </>
   );
 };

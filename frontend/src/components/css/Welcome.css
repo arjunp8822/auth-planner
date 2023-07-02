@@ -6,3 +6,10 @@
     color: var(--text-main);
     text-transform: capitalize;
 }
+
+#welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: start;
+}

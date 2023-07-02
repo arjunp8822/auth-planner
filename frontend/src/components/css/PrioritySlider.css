@@ -16,6 +16,7 @@
     padding: var(--button-padding);
     border-radius: var(--border-radius);
     gap: 20px;
+    box-shadow: var(--box-shadow);
 }
 
 .category-label-active {
@@ -40,32 +41,18 @@
 }
 
 @media (max-width: 768px) {
+    
     #priority li {
-        width: 100px;
+        max-width: 100px;
     }
     
-    .slide {
-        width: 100px;
-    }
-    
-    .position-one {
-        transform: translateX(-100px);
-    }
-    
-    .position-three {
-        transform: translateX(100px);
-    }
-    
-    .inactive-slider {
-        width: 300px;
-    }
-
     .category-label {
-        gap: 5px;
+        width: fit-content;
+        gap: 10px;
+        padding: 10px;
     }
 
     .category-label-num {
-        border: 1px solid #ecaf70;
         height: 20px;
         width: 20px;
         font-size: 10px;
