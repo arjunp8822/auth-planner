@@ -11,7 +11,7 @@ const Welcome = () => {
           Hey <span>{loggedUser}</span>, this is your to-do list.
         </h1>
       )}
-      {!loggedUser && <h1>Please log in to see your to-do list.</h1>}
+      {!loggedUser && <h1>Please log in to see your tasks.</h1>}
     </section>
   );
 };

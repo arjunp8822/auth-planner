@@ -24,8 +24,6 @@ const PrioritySlider = () => {
     }
   };
 
-  console.log(userCategories);
-
   return (
     <>
       <section id="priority">

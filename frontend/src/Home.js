@@ -3,8 +3,9 @@ import axios from "axios";
 import { UserContext } from "./context/UserContext";
 import Welcome from "./components/Welcome";
 import PrioritySlider from "./components/PrioritySlider";
-import { BsPlusSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import BannerImg from "./assets/banner-removebg.png";
+import "./Home.css";
 
 const Home = () => {
   const { loggedUser, editCategory, setEditCategory } = useContext(UserContext);
@@ -55,6 +56,19 @@ const Home = () => {
 
   return (
     <>
+      <section id="banner">
+        <img src={BannerImg} alt="banner-img" className="banner-img" />
+        <div className="banner-text">
+          <h3>Task Management & To-Do List</h3>
+          <p>
+            This productive tool is designed to help you better manage your
+            tasks conveniently!
+          </p>
+          <button>
+            <p>Lets Start</p>
+          </button>
+        </div>
+      </section>
       {loading ? (
         <div>Loading</div>
       ) : (
